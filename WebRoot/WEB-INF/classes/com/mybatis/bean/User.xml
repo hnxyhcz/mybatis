@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--  对应例子Test1
+<mapper namespace="com.mybatis.bean.UserMapper">
+	<select id="selectUserById" parameterType="int" resultType="User">
+		select * from User where id = #{id}
+	</select>
+</mapper>
+-->
+<!-- 例子Test2 
+<mapper namespace="com.mybatis.inter.IUserOperation">
+	<select id="selectUserById" parameterType="int" resultType="User">
+		select * from User where id = #{id}
+	</select>
+	
+	<resultMap type="User" id="ResultListUser">
+	Column属性表示从数据库中查询的属性，Property则表示查询出来的属性对应的值赋给实体对象的哪个属性 
+		<id column="id" property="id"/>
+		<result column="userName" property="userName"/>
+	</resultMap>
+</mapper>
+-->
+<mapper namespace="com.mybatis.inter.IUserOperation">
+	<select id="selectUserById" parameterType="int" resultType="User">
+		select * from User where id = #{id}
+	</select>
+	
+	<select id="selectUser" parameterType="String" resultMap="ResultListUser">
+		select * from user where userName like #{userName}
+	</select>
+	
+	<resultMap type="User" id="ResultListUser">
+	<!-- Column属性表示从数据库中查询的属性，Property则表示查询出来的属性对应的值赋给实体对象的哪个属性--> 
+		<id column="id" property="id"/>
+		<result column="userName" property="userName"/>
+		<result column="userAge" property="userAge"/>
+		<result column="userAddress" property="userAddress"/>
+	</resultMap>
+	
+	<insert id="addUser" parameterType="User" flushCache="true"  keyProperty="id">
+		insert into user(userName, userAge, userAddress) values(#{userName}, #{userAge}, #{userAddress});
+	</insert>
+	
+	<update id="updateUser" parameterType="User" flushCache="true">
+		update user set userName=#{userName}, userAge=#{userAge}, userAddress=#{userAddress} where id=#{id};
+	</update>
+	
+	<delete id="deleteUser" flushCache="true" parameterType="int">
+		delete from user where id=#{id};
+	</delete>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
